@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-// Database credentials - replace with your own
+// Database connection
 $host = "localhost";
 $dbname = "AGRONOMY_FARMS";
 $username = "root";
