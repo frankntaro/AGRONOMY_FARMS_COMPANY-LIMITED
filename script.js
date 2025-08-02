@@ -1,4 +1,4 @@
-// Hamburger Menu Functionality
+// Hamburger Menu 
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
@@ -171,7 +171,7 @@ document.querySelectorAll('.tab-button').forEach(button => {
 });
 
 // Chart functionality
-let growthChart; // This should be defined where you create the chart
+let growthChart; 
 
 // Update chart labels when language changes
 document.addEventListener('languageChange', () => {
