@@ -8,9 +8,7 @@ $user = 'root';
 $pass = '';   
 
 // Company email address
-$companyEmail = 'info@agronomyfarms.co.tz'; // Change to your company email
-
-// 2. COLLECT FORM DATA
+$companyEmail = 'info@agronomyfarms.co.tz'; 
 $fullName = $_POST['fullName'] ?? '';
 $email    = $_POST['email'] ?? '';
 $phone    = $_POST['phone'] ?? '';
@@ -24,8 +22,6 @@ if (empty($fullName) || empty($email) || empty($message)) {
     echo "Please fill in all required fields.";
     exit;
 }
-
-// 3. SAVE TO DATABASE
 try {
     $conn = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -48,7 +44,7 @@ try {
     exit;
 }
 
-// 4. SEND EMAIL TO COMPANY
+// SEND EMAIL TO COMPANY
 $companySubject = "New Contact Message from $fullName";
 $companyBody = "
 You have received a new message from the Agronomy Farms contact form:
@@ -63,7 +59,7 @@ $message
 ";
 $companyHeaders = "From: no-reply@agronomyfarms.co.tz";
 
-// 5. SEND EMAIL TO USER
+//  SEND EMAIL TO USER
 $userSubject = "Thank You for Contacting Agronomy Farms";
 $userBody = "
 Dear $fullName,
@@ -81,7 +77,7 @@ Agronomy Farms Company Limited
 ";
 $userHeaders = "From: no-reply@agronomyfarms.co.tz";
 
-// Send emails (ensure mail() is configured on your server)
+// Send emails that should be configured in the server
 @mail($companyEmail, $companySubject, $companyBody, $companyHeaders);
 @mail($email, $userSubject, $userBody, $userHeaders);
 
