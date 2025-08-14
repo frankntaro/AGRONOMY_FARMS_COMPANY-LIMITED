@@ -1,4 +1,5 @@
 <?php
+// Always return JSON
 header('Content-Type: application/json');
 
 // Database connection
@@ -7,41 +8,59 @@ $dbname = "AGRONOMY_FARMS";
 $username = "root";
 $password = "";
 
-// Get POST data
-$data = json_decode(file_get_contents('php://input'), true);
-
-if (!$data) {
-    echo json_encode(["success" => false, "message" => "No data received."]);
+// Only allow POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
     exit;
 }
 
-// Validate required fields
-$requiredFields = ['fullName', 'phone', 'region', 'district', 'cropType', 'quantity', 'price', 'consent'];
-foreach ($requiredFields as $field) {
-    if (!isset($data[$field]) || $data[$field] === "") {
-        echo json_encode(["success" => false, "message" => "Missing field: $field"]);
-        exit;
-    }
+// Load DB config
+require_once __DIR__ . '/admin/config.php';
+
+
+// Check DB connection
+if (!$conn || $conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Database connection failed.']);
+    exit;
 }
 
-// Sanitize and assign variables
-$fullName = htmlspecialchars(strip_tags($data['fullName']));
-$phone = htmlspecialchars(strip_tags($data['phone']));
-$region = htmlspecialchars(strip_tags($data['region']));
-$district = htmlspecialchars(strip_tags($data['district']));
-$cropType = htmlspecialchars(strip_tags($data['cropType']));
-$quantity = (int)$data['quantity'];
-$price = (float)$data['price'];
-$consent = (int)$data['consent'];
+// Extract & sanitize data
+$fullName        = trim($_POST['fullName'] ?? '');
+$phoneNumber     = trim($_POST['phone_number'] ?? '');
+$region          = trim($_POST['region'] ?? '');
+$district        = trim($_POST['district'] ?? '');
+$cropType       = trim($_POST['crop_type'] ?? '');
+$quantityKg      = trim($_POST['quantity_kg'] ?? '');
+$expectedPrice           = trim($_POST['expected_price'] ?? '');
+$submissionDate  = $_POST['submission_date'] ?? date('Y-m-d H:i:s');
+
+// Validate required fields
+if ($fullName === '' || $phoneNumber === '' || $region === '' || $district === '' || $cropType === '' || $quantityKg === '' || $expectedPrice === '') {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
+    exit;
+}
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Insert into DB securely
+    $sql = "INSERT INTO applications (full_name, phone_number, region, district, crop_type, quantity_kg, expectedPrice, submission_date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
 
-    $stmt = $pdo->prepare("INSERT INTO crop_sales (full_name, phone, region, district, crop_type, quantity, price, consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$fullName, $phone, $region, $district, $cropType, $quantity, $price, $consent]);
+    // Bind parameters
+    $stmt->bind_param("ssssssds", $fullName, $phoneNumber, $region, $district, $cropType, $quantityKg, $expectedPrice, $submissionDate);
 
-    echo json_encode(["success" => true]);
-} catch (PDOException $e) {
-    echo json_encode(["success" => false, "message" => "Database error: " . $e->getMessage()]);
+    // Execute & return response
+    $stmt->execute();
+    echo json_encode(['success' => true, 'message' => 'Application submitted successfully!']);
+    $stmt->close();
+
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Error saving application: ' . $e->getMessage()]);
+} finally {
+    $conn->close();
 }
+?>
