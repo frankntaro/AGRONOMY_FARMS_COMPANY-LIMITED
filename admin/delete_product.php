@@ -2,20 +2,28 @@
 include 'auth_check.php';
 include 'includes/db.php';
 
-$id = $_GET['id'];
+// Check if a valid ID is provided in the URL
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $order_id = intval($_GET['id']);
 
-// First, delete related records from the order_items table
-$stmt_items = $conn->prepare("DELETE FROM order_items WHERE product_id = ?");
-$stmt_items->bind_param("i", $id);
-$stmt_items->execute();
-$stmt_items->close();
+    // Use a prepared statement to prevent SQL injection
+    $stmt = $conn->prepare("DELETE FROM orders WHERE id = ?");
+    $stmt->bind_param("i", $order_id);
 
-// Now, delete the product from the products table
-$stmt_product = $conn->prepare("DELETE FROM products WHERE id = ?");
-$stmt_product->bind_param("i", $id);
-$stmt_product->execute();
-$stmt_product->close();
+    if ($stmt->execute()) {
+        // Deletion successful, redirect back to the orders page
+        header("Location: orders.php?deleted=true");
+    } else {
+        // Deletion failed, show an error message
+        die("Error deleting record: " . $conn->error);
+    }
 
-header("Location: products.php");
+    $stmt->close();
+} else {
+    // No ID provided, or it was invalid
+    header("Location: orders.php?deleted=false");
+}
+
+$conn->close();
 exit();
 ?>
