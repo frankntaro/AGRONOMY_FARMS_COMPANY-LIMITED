@@ -1,22 +1,17 @@
 <?php
-// Start a new session to handle user login state and include necessary files
+// Start a new session and include necessary files
 session_start();
 include 'auth_check.php';
-// Include the database configuration file. This is crucial for connecting to the DB.
 require_once 'config.php';
-
-
 
 // Function to safely get data from the applications table
 function getApplications($conn) {
     // Prepare a SQL query to select all data from the 'applications' table
-    // Ordering by the latest applications first
     $sql = "SELECT * FROM applications ORDER BY id DESC";
     $result = $conn->query($sql);
 
     // Check if the query was successful
     if ($result === false) {
-        // Log the error and return an empty array
         error_log("Error fetching applications: " . $conn->error);
         return [];
     }
@@ -39,9 +34,7 @@ $applications = getApplications($conn);
     <title>Admin Dashboard | Agronomy Farms</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Use a nature-inspired font from Google Fonts */
@@ -72,28 +65,29 @@ $applications = getApplications($conn);
         tr:nth-child(even) {
             background-color: #F0F4E8; /* Light green for alternating rows */
         }
+        .crop-image {
+            width: 80px; /* Adjust size as needed */
+            height: auto;
+            border-radius: 4px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
     <?php include 'header.php'; ?>
     <?php include 'sidebar.php'; ?>
 
-    <!-- Main content area for the dashboard -->
     <div style="margin-left:220px; padding:20px;">
         <div class="page-content w-full max-w-7xl bg-white p-8 rounded-lg shadow-xl">
-            <!-- Dashboard Header -->
             <h1 class="page-title text-4xl sm:text-5xl font-bold pb-4 mb-8 flex items-center gap-4">
                 <i class="fas fa-chart-line text-[#6A994E]"></i> Admin Dashboard
             </h1>
 
-            <!-- Subheading for the applications table -->
             <h2 class="text-3xl font-bold text-[#1A5319] mt-8 mb-6">Submitted Crop Applications</h2>
             
-            <!-- Check if there are any applications to display -->
             <?php if (empty($applications)): ?>
                 <p class="text-center text-gray-600 text-lg mt-12">No crop applications have been submitted yet.</p>
             <?php else: ?>
-                <!-- Applications Table -->
                 <div class="overflow-x-auto rounded-lg shadow-md">
                     <table class="min-w-full table-auto border-collapse">
                         <thead>
@@ -101,31 +95,26 @@ $applications = getApplications($conn);
                                 <th class="px-4 py-3">Application ID</th>
                                 <th class="px-4 py-3">Farmer Name</th>
                                 <th class="px-4 py-3">Phone Number</th>
-                                <th class="px-4 py-3">Email</th>
-                                <th class="px-4 py-3">Crop Name</th>
+                                <th class="px-4 py-3">Crop Type</th>
                                 <th class="px-4 py-3">Quantity (kg)</th>
+                                <th class="px-4 py-3">Expected Price</th>
                                 <th class="px-4 py-3">Location</th>
+                                <th class="px-4 py-3">Status</th>
                                 <th class="px-4 py-3">Submission Date</th>
-                                <th class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Loop through the applications data and display each row -->
                             <?php foreach ($applications as $application): ?>
                                 <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
                                     <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['id']); ?></td>
                                     <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['full_name']); ?></td>
                                     <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['phone_number']); ?></td>
-                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['email']); ?></td>
-                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['crop_name']); ?></td>
+                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['crop_type']); ?></td>
                                     <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['quantity_kg']); ?></td>
-                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['location']); ?></td>
-                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['submission_date']); ?></td>
-                                    <td class="px-4 py-3">
-                                        <!-- Example action buttons -->
-                                        <button class="bg-green-500 text-white px-3 py-1 rounded-full text-sm hover:bg-green-600 transition-colors">View</button>
-                                        <button class="bg-red-500 text-white px-3 py-1 rounded-full text-sm hover:bg-red-600 transition-colors">Delete</button>
-                                    </td>
+                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['expected_price']); ?></td>
+                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['region'] . ', ' . $application['district']); ?></td>
+                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['status']); ?></td>
+                                    <td class="px-4 py-3 text-gray-800"><?php echo htmlspecialchars($application['submitted_at']); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

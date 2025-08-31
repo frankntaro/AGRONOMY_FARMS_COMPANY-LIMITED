@@ -3,7 +3,7 @@
 session_start();
 
 include 'auth_check.php';
-include '../includes/db.php';
+include 'includes/db.php';
 
 // Get the user ID from the URL and sanitize it
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
