@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: includes/login.php");
+    header("Location: includes/login1.php");
     exit();
 }
 ?>

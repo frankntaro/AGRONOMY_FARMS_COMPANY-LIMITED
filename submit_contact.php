@@ -14,7 +14,7 @@ $email    = $_POST['email'] ?? '';
 $phone    = $_POST['phone'] ?? '';
 $subject  = $_POST['subject'] ?? '';
 $message  = $_POST['message'] ?? '';
-$submittedAt = date('Y-m-d H:i:s');
+$receivedAt = date('Y-m-d H:i:s');
 
 // Validate basic input
 if (empty($fullName) || empty($email) || empty($message)) {
@@ -27,8 +27,8 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $conn->prepare("
-        INSERT INTO contacts (full_name, email, phone, subject, message, submitted_at)
-        VALUES (:fullName, :email, :phone, :subject, :message, :submittedAt)
+        INSERT INTO messages (full_name, email, phone, subject, message, received_at)
+        VALUES (:fullName, :email, :phone, :subject, :message, :receivedAt)
     ");
     $stmt->execute([
         ':fullName' => $fullName,
@@ -36,7 +36,7 @@ try {
         ':phone' => $phone,
         ':subject' => $subject,
         ':message' => $message,
-        ':submittedAt' => $submittedAt
+        ':receivedAt' => $receivedAt
     ]);
 } catch (PDOException $e) {
     http_response_code(500);

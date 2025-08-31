@@ -75,7 +75,7 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
-        
+        /* NAVBAR STYLES */
         .navbar {
             background: rgba(15, 46, 15, 0.85);
             backdrop-filter: blur(5px);
@@ -198,6 +198,86 @@
                 width: 0;
             }
         }
+        /* ==== DROPDOWN MENU ==== */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #2d6a4f;
+    min-width: 180px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1001;
+}
+
+.dropdown-menu li a {
+    padding: 10px 15px;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #1b4332;
+}
+
+/* Show dropdown on hover for desktop */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* ==== HAMBURGER MENU ==== */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+
+/* ==== MOBILE RESPONSIVE ==== */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        flex-direction: column;
+        background-color: #2d6a4f;
+        width: 100%;
+        text-align: left;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: static;
+        background-color: #40916c;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: none; /* disable hover on mobile */
+    }
+
+    .dropdown-menu.show {
+        display: block;
+    }
+}
         
      .carousel {
         position: relative;
@@ -262,6 +342,21 @@
             display: none;
         }
     }
+     .shop-button {
+            background-color: var(--accent);
+            color: white;
+            font-weight: bold;
+            padding: 12px 32px;
+            border-radius: 8px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .shop-button:hover {
+            background-color: #9B2C2C;
+            transform: scale(1.05);
+        }
     
     
     .social-icon {
@@ -382,3 +477,4 @@
         background: #4A7C59;
         color: white;
     }
+    

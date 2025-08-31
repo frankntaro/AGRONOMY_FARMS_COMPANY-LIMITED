@@ -1,66 +1,75 @@
 <?php
-// Always return JSON
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 header('Content-Type: application/json');
 
-// Database connection
-$host = "localhost";
-$dbname = "AGRONOMY_FARMS";
-$username = "root";
-$password = "";
-
-// Only allow POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
     exit;
 }
 
-// Load DB config
-require_once __DIR__ . '/admin/config.php';
+require_once 'config.php';
 
-
-// Check DB connection
 if (!$conn || $conn->connect_error) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Database connection failed.']);
+    echo json_encode(['success' => false, 'message' => "Database connection failed: {$conn->connect_error}"]);
     exit;
 }
 
-// Extract & sanitize data
-$fullName        = trim($_POST['fullName'] ?? '');
-$phoneNumber     = trim($_POST['phone_number'] ?? '');
-$region          = trim($_POST['region'] ?? '');
-$district        = trim($_POST['district'] ?? '');
-$cropType       = trim($_POST['crop_type'] ?? '');
-$quantityKg      = trim($_POST['quantity_kg'] ?? '');
-$expectedPrice           = trim($_POST['expected_price'] ?? '');
-$submissionDate  = $_POST['submission_date'] ?? date('Y-m-d H:i:s');
+$fullName = trim($_POST['fullName'] ?? '');
+$phoneNumber = trim($_POST['phone_number'] ?? '');
+$region = trim($_POST['region'] ?? '');
+$district = trim($_POST['district'] ?? '');
+$cropType = trim($_POST['crop_type'] ?? '');
+$quantityKg = trim($_POST['quantity_kg'] ?? '');
+$expectedPrice = trim($_POST['price'] ?? '');
 
 // Validate required fields
-if ($fullName === '' || $phoneNumber === '' || $region === '' || $district === '' || $cropType === '' || $quantityKg === '' || $expectedPrice === '') {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
-    exit;
+$requiredFields = ['fullName', 'phone_number', 'region', 'district', 'crop_type', 'quantity_kg', 'price'];
+foreach ($requiredFields as $field) {
+    if (empty($_POST[$field])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => "Please fill in all required fields: $field is missing."]);
+        exit;
+    }
 }
 
+// Validate consent
+if (!isset($_POST['consent']) || $_POST['consent'] !== '1') {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'You must agree to the terms and conditions.']);
+    exit;
+}
+$consentGiven = 1;
+
+$quantityKg_int = (int)$quantityKg;
+$expectedPrice_dec = (float)$expectedPrice;
+
 try {
-    // Insert into DB securely
-    $sql = "INSERT INTO applications (full_name, phone_number, region, district, crop_type, quantity_kg, expectedPrice, submission_date) 
+    $sql = "INSERT INTO applications (full_name, phone_number, region, district, crop_type, quantity_kg, expected_price, consent_given) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
-    // Bind parameters
-    $stmt->bind_param("ssssssds", $fullName, $phoneNumber, $region, $district, $cropType, $quantityKg, $expectedPrice, $submissionDate);
+    if ($stmt === false) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => "Database statement preparation failed: {$conn->error}"]);
+        exit;
+    }
 
-    // Execute & return response
-    $stmt->execute();
-    echo json_encode(['success' => true, 'message' => 'Application submitted successfully!']);
+    $stmt->bind_param("sssssids", $fullName, $phoneNumber, $region, $district, $cropType, $quantityKg_int, $expectedPrice_dec, $consentGiven);
+
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true, 'message' => 'Application submitted successfully!']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => "Error executing statement: {$stmt->error}"]);
+    }
+
     $stmt->close();
-
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Error saving application: ' . $e->getMessage()]);
 } finally {
-    $conn->close();
+    if ($conn) $conn->close();
 }
-?>

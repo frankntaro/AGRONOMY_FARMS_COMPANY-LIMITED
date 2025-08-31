@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,7 +10,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -65,7 +67,8 @@
             overflow-y: auto;
             height: 100vh;
             border-radius: 10px;
-            position: relative; /* for language buttons */
+            position: relative;
+            /* for language buttons */
         }
 
         form {
@@ -169,7 +172,8 @@
         }
 
         /* Confirmation & Alert Styles */
-        .confirmation-message, .alert-message {
+        .confirmation-message,
+        .alert-message {
             position: fixed;
             top: 0;
             left: 0;
@@ -186,10 +190,12 @@
         }
 
         .alert-message {
-            background-color: rgba(200, 0, 0, 0.85); /* Red for alert */
+            background-color: rgba(200, 0, 0, 0.85);
+            /* Red for alert */
         }
 
-        .confirmation-message.show, .alert-message.show {
+        .confirmation-message.show,
+        .alert-message.show {
             opacity: 1;
             visibility: visible;
         }
@@ -210,7 +216,8 @@
         }
 
         .alert-message .message-box h2 {
-            color: #c00; /* Red for alert heading */
+            color: #c00;
+            /* Red for alert heading */
         }
 
         .message-box p {
@@ -249,6 +256,7 @@
                 transform: translateY(60px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -287,6 +295,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="left">
@@ -294,15 +303,15 @@
                 <div>
                     <h1 data-en="Sell Your Crops" data-sw="Uza Mazao Yako">Sell Your Crops</h1>
                     <p data-en="Welcome! Fill in your details to sell your crops directly to our company. The form is simple and ensures privacy and transparency in your agreement."
-                       data-sw="Karibu! Jaza maelezo yako ili kuuza mazao yako moja kwa moja kwa kampuni yetu. Fomu hii ni rahisi na inahakikisha usiri na uwazi katika makubaliano yako.">
-                        Welcome! Fill in your details to sell your crops directly to our company. The form is simple and ensures privacy and transparency in your agreement.
+                        data-sw="Karibu! Jaza maelezo yako ili kuuza mazao yako moja kwa moja kwa kampuni yetu. Fomu hii ni rahisi na inahakikisha usiri na uwazi katika makubaliano yako.">
+                        Welcome! Fill in your details to sell your crops directly to our company. The form is simple
+                        and ensures privacy and transparency in your agreement.
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="right">
-            <!-- Language Switcher Buttons -->
             <div class="language-switcher">
                 <button class="lang-button active" data-lang="en">EN</button>
                 <button class="lang-button" data-lang="sw">SW</button>
@@ -312,15 +321,18 @@
                 <h2 data-en="Step 1: Farmer Details" data-sw="Hatua ya 1: Maelezo ya Mkulima">Step 1: Farmer Details</h2>
                 <div class="form-group">
                     <label for="fullName" data-en="Full Name:" data-sw="Jina Kamili:">Full Name:</label>
-                    <input type="text" id="fullName" name="fullName" placeholder="John Doe" required data-en-placeholder="John Doe" data-sw-placeholder="Juma Juma" />
+                    <input type="text" id="fullName" name="fullName" placeholder="John Doe" required
+                        data-en-placeholder="John Doe" data-sw-placeholder="Juma Juma" />
                 </div>
                 <div class="form-group">
                     <label for="phone" data-en="Phone Number:" data-sw="Namba ya Simu:">Phone Number:</label>
-                    <input type="tel" id="phone" name="phone_number" placeholder="+255..." required data-en-placeholder="+255..." data-sw-placeholder="+255..." />
+                    <input type="tel" id="phone" name="phone_number" placeholder="+255..." required
+                        data-en-placeholder="+255..." data-sw-placeholder="+255..." />
                 </div>
                 <div class="form-group">
                     <label for="region" data-en="Region:" data-sw="Mkoa:">Region:</label>
-                    <input list="regions" id="region" name="region" placeholder="Enter region..." required data-en-placeholder="Enter region..." data-sw-placeholder="Weka mkoa..." />
+                    <input list="regions" id="region" name="region" placeholder="Enter region..." required
+                        data-en-placeholder="Enter region..." data-sw-placeholder="Weka mkoa..." />
                     <datalist id="regions">
                         <option value="Arusha" data-en="Arusha" data-sw="Arusha"></option>
                         <option value="Dar es Salaam" data-en="Dar es Salaam" data-sw="Dar es Salaam"></option>
@@ -351,13 +363,16 @@
                         <option value="Tanga" data-en="Tanga" data-sw="Tanga"></option>
                         <option value="Unguja North" data-en="Unguja North" data-sw="Unguja Kaskazini"></option>
                         <option value="Unguja South" data-en="Unguja South" data-sw="Unguja Kusini"></option>
-                        <option value="Zanzibar Urban/West" data-en="Zanzibar Urban/West" data-sw="Mjini Magharibi (Zanzibar)"></option>
+                        <option value="Zanzibar Urban/West" data-en="Zanzibar Urban/West"
+                            data-sw="Mjini Magharibi (Zanzibar)"></option>
                     </datalist>
                 </div>
                 <div class="form-group">
                     <label for="district" data-en="District:" data-sw="Wilaya:">District:</label>
-                    <input list="districts" id="district" name="district" placeholder="Enter district..." required data-en-placeholder="Enter district..." data-sw-placeholder="Weka wilaya..." />
-                    <datalist id="districts"></datalist>
+                    <input list="districts" id="district" name="district" placeholder="Enter district..." required
+                        data-en-placeholder="Enter district..." data-sw-placeholder="Weka wilaya..." />
+                    <datalist id="districts">
+                    </datalist>
                 </div>
                 <div class="form-navigation">
                     <button type="button" disabled data-en="Previous" data-sw="Iliyopita">Previous</button>
@@ -365,7 +380,7 @@
                 </div>
             </form>
 
-            <form id="form2">
+            <form id="form2" enctype="multipart/form-data">
                 <h2 data-en="Step 2: Crop Details" data-sw="Hatua ya 2: Maelezo ya Mazao">Step 2: Crop Details</h2>
                 <div class="form-group">
                     <label for="cropType" data-en="Crop Type:" data-sw="Aina ya Zao:">Crop Type:</label>
@@ -380,11 +395,14 @@
                 </div>
                 <div class="form-group">
                     <label for="quantity" data-en="Quantity (kg):" data-sw="Kiasi (kg):">Quantity (kg):</label>
-                    <input type="number" id="quantity" name="quantity_kg" placeholder="e.g., 1000" required data-en-placeholder="e.g., 1000" data-sw-placeholder="mfano, 1000" />
+                    <input type="number" id="quantity" name="quantity_kg" placeholder="e.g., 1000" required
+                        data-en-placeholder="e.g., 1000" data-sw-placeholder="mfano, 1000" />
                 </div>
                 <div class="form-group">
-                    <label for="price" data-en="Expected Price per Kg:" data-sw="Bei Inayotarajiwa kwa Kg:">Expected Price per Kg:</label>
-                    <input type="number" id="price" name="price" placeholder="e.g., 500 TSh" required data-en-placeholder="e.g., 500 TSh" data-sw-placeholder="mfano, 500 TSh" />
+                    <label for="price" data-en="Expected Price per Kg:"
+                        data-sw="Bei Inayotarajiwa kwa Kg:">Expected Price per Kg:</label>
+                    <input type="number" id="price" name="price" placeholder="e.g., 500 TSh" required
+                        data-en-placeholder="e.g., 500 TSh" data-sw-placeholder="mfano, 500 TSh" />
                 </div>
                 <div class="form-navigation">
                     <button type="button" id="prev2" data-en="Previous" data-sw="Iliyopita">Previous</button>
@@ -393,19 +411,23 @@
             </form>
 
             <form id="form3">
-                <h2 data-en="Step 3: Agreement & Submission" data-sw="Hatua ya 3: Makubaliano & Kutuma">Step 3: Agreement & Submission</h2>
+                <h2 data-en="Step 3: Agreement & Submission" data-sw="Hatua ya 3: Makubaliano & Kutuma">Step 3:
+                    Agreement & Submission</h2>
                 <div class="terms">
                     <strong data-en="Terms & Conditions:" data-sw="Sheria na Masharti:">Terms & Conditions:</strong>
                     <p data-en="By submitting, you agree to sell your listed crops to the company at the agreed price. All data is handled under privacy and fair-use policies."
-                       data-sw="Kwa kutuma, unakubali kuuza mazao yako kwa kampuni kwa bei iliyokubaliwa. Data zote zitatunzwa kwa mujibu wa sera za faragha na matumizi sahihi.">
-                        By submitting, you agree to sell your listed crops to the company at the agreed price. All data is handled under privacy and fair-use policies.
+                        data-sw="Kwa kutuma, unakubali kuuza mazao yako kwa kampuni kwa bei iliyokubaliwa. Data zote zitatunzwa kwa mujibu wa sera za faragha na matumizi sahihi.">
+                        By submitting, you agree to sell your listed crops to the company at the agreed price. All data
+                        is handled under privacy and fair-use policies.
                     </p>
                 </div>
 
                 <div class="form-group">
                     <label>
-                        <input type="checkbox" id="consent" required />
-                        <span data-en="I agree to the terms and give my consent." data-sw="Ninakubali sheria na masharti na kutoa ruhusa yangu.">I agree to the terms and give my consent.</span>
+                        <input type="checkbox" id="consent" name="consent" value="1" required />
+                        <span data-en="I agree to the terms and give my consent."
+                            data-sw="Ninakubali sheria na masharti na kutoa ruhusa yangu.">I agree to the terms and give
+                            my consent.</span>
                     </label>
                 </div>
 
@@ -417,29 +439,79 @@
         </div>
     </div>
 
-    <!-- Confirmation Box HTML -->
     <div id="confirmationMessage" class="confirmation-message">
         <div class="message-box">
             <h2 data-en="✅ Request Submitted" data-sw="✅ Ombi Limetumwa">✅ Request Submitted</h2>
             <p data-en="Thank you for submitting your crop details. Our team will review your request and contact you soon."
-               data-sw="Asante kwa kutuma maelezo ya mazao yako. Timu yetu itapitia ombi lako na itawasiliana nawe hivi karibuni.">
+                data-sw="Asante kwa kutuma maelezo ya mazao yako. Timu yetu itapitia ombi lako na itawasiliana nawe hivi karibuni.">
                 Thank you for submitting your crop details. Our team will review your request and contact you soon.
             </p>
             <a href="index.html" class="home-link" data-en="← Back to Home" data-sw="← Rudi Nyumbani">← Back to Home</a>
         </div>
     </div>
 
-<!-- Custom Alert Box for validation -->
-<div id="alertMessage" class="alert-message">
-    <div class="message-box">
-        <h2 data-en="⚠️ Required" data-sw="⚠️ Inahitajika">⚠️ Required</h2>
-        <p id="alertText" data-en="You must agree to the terms and give your consent." data-sw="Lazima ukubali sheria na masharti na kutoa ruhusa yako.">
-            You must agree to the terms and give your consent.
-        </p>
-        <button class="close-button" data-en="Close" data-sw="Funga">Close</button>
-    </div>
-</div>
+    <div id="alertMessage" class="alert-message">
+        <div class="message-box">
+            <h2 data-en="⚠️ Required" data-sw="⚠️ Inahitajika">⚠️ Required</h2>
+            <p id="alertText" data-en="You must agree to the terms and give your consent."
+                data-sw="Lazima ukubali sheria na masharti na kutoa ruhusa yako.">
+                You must agree to the terms and give your consent.
+            </p>
+            <button class="close-button" data-en="Close" data-sw="Funga">Close</button>
+        </div>
 
-    <script src="scripts.js"></script>
+        <script>
+            const regionInput = document.getElementById('region');
+            const districtDatalist = document.getElementById('districts');
+
+            const districtsByRegion = {
+                "Arusha": ["Arusha Urban", "Arusha Rural", "Karatu", "Monduli", "Ngorongoro", "Longido", "Meru"],
+                "Dar es Salaam": ["Kinondoni", "Ilala", "Temeke"],
+                "Dodoma": ["Dodoma Urban", "Dodoma Rural", "Kondoa", "Mpwapwa", "Kongwa", "Chamwino", "Bahi"],
+                "Geita": ["Geita Urban", "Geita Rural", "Bukombe", "Chato", "Mbogwe", "Nyang'hwale"],
+                "Iringa": ["Iringa Urban", "Iringa Rural", "Mufindi", "Kilolo", "Mafinga"],
+                "Kagera": ["Bukoba Urban", "Bukoba Rural", "Muleba", "Biharamulo", "Ngara", "Karagwe", "Kyerwa", "Missenyi"],
+                "Katavi": ["Mpanda Urban", "Mpanda Rural", "Mlele"],
+                "Kigoma": ["Kigoma Urban", "Kigoma Rural", "Kasulu Urban", "Kasulu Rural", "Kakonko", "Kibondo", "Buyungu", "Uvinza"],
+                "Kilimanjaro": ["Moshi Urban", "Moshi Rural", "Rombo", "Hai", "Siha", "Mwanga", "Same"],
+                "Lindi": ["Lindi Urban", "Lindi Rural", "Nachingwea", "Ruangwa", "Liwale", "Kilwa"],
+                "Manyara": ["Babati Urban", "Babati Rural", "Kiteto", "Mbulu", "Hanang", "Simanjiro"],
+                "Mara": ["Musoma Urban", "Musoma Rural", "Butiama", "Bunda", "Serengeti", "Rorya", "Tarime"],
+                "Mbeya": ["Mbeya Urban", "Mbeya Rural", "Mbarali", "Chunya", "Kyela", "Rungwe"],
+                "Morogoro": ["Morogoro Urban", "Morogoro Rural", "Mvomero", "Kilosa", "Kilombero", "Ulanga", "Gairo"],
+                "Mtwara": ["Mtwara Urban", "Mtwara Rural", "Newala", "Tandahimba", "Masasi", "Nanyumbu"],
+                "Mwanza": ["Mwanza Urban", "Mwanza Rural", "Ilemela", "Magu", "Kwimba", "Misungwi", "Sengerema", "Ukerewe"],
+                "Njombe": ["Njombe Urban", "Njombe Rural", "Makambako", "Wanging'ombe", "Ludewa"],
+                "Pemba North": ["Wete", "Micheweni"],
+                "Pemba South": ["Mkoani", "Chake-Chake"],
+                "Pwani": ["Kibaha Urban", "Kibaha Rural", "Bagamoyo", "Rufiji", "Mkuranga", "Kisarawe", "Mafia"],
+                "Rukwa": ["Sumbawanga Urban", "Sumbawanga Rural", "Kalambo", "Nkasi"],
+                "Ruvuma": ["Songea Urban", "Songea Rural", "Mbinga", "Namtumbo", "Tunduru", "Madaba"],
+                "Shinyanga": ["Shinyanga Urban", "Shinyanga Rural", "Kahama Urban", "Kahama Rural", "Kishapu"],
+                "Simiyu": ["Bariadi", "Maswa", "Meatu", "Busega", "Itilima"],
+                "Singida": ["Singida Urban", "Singida Rural", "Manyoni", "Iramba", "Mkalama", "Ikungi"],
+                "Tabora": ["Tabora Urban", "Tabora Rural", "Igunga", "Nzega", "Sikonge", "Urambo", "Kaliua"],
+                "Tanga": ["Tanga Urban", "Tanga Rural", "Pangani", "Handeni", "Kilindi", "Korogwe", "Lushoto", "Muheza", "Mkinga"],
+                "Unguja North": ["North A", "North B"],
+                "Unguja South": ["Central/South"],
+                "Zanzibar Urban/West": ["Urban West"]
+            };
+
+            regionInput.addEventListener('input', function () {
+                const selectedRegion = this.value;
+                districtDatalist.innerHTML = '';
+
+                if (districtsByRegion[selectedRegion]) {
+                    districtsByRegion[selectedRegion].forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        districtDatalist.appendChild(option);
+                    });
+                }
+            });
+        </script>
+        <script src="scripts.js"></script>
 </body>
+
+</html>
 </html>

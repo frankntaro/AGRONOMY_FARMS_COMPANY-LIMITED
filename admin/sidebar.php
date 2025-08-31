@@ -12,7 +12,7 @@
         <li><a href="messages.php"><i class="fas fa-envelope"></i> Messages</a></li>
         <li><a href="sales_report.php"><i class="fas fa-chart-line"></i> Reports</a></li>
         <li><a href="trends.php"><i class="fas fa-chart-area"></i> Trends</a></li>
-        <li><a href="includes/login.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <li><a href="includes/login1.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
 </div>
 
