@@ -97,7 +97,7 @@ CREATE TABLE order_items (
     KEY idx_order (order_id),
     KEY idx_product (product_id),
     CONSTRAINT fk_orderitems_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    CONSTRAINT fk_orderitems_product FOREIGN KEY (product_id) REFERENCES applications(id) ON DELETE CASCADE
+    CONSTRAINT fk_orderitems_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- =========================
